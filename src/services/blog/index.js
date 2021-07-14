@@ -53,7 +53,11 @@ router.route('/:postId')
     // ===============  RETRIEVES SINGLE BLOG POST =======================
     .get( async (req, res, next) => {
         try {
-            const data = await BlogPost.findByPk(req.params.postId)
+            const data = await BlogPost.findByPk(req.params.postId, {
+                include: [{model: Author, attributes: ['name', 'avatar'] }],
+                attributes: { exclude: 'authorId'}
+                }
+            )
             res.send(data)
         } catch (error) {
             console.log(error)
