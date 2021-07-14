@@ -3,7 +3,7 @@ import listEndpoints from 'express-list-endpoints'
 import cors from 'cors'
 import { badRequestMiddleware, catchAllErrorsMiddleware, notFoundMiddleware } from './errorMiddlewares.js'
 
-import {sequelize} from './db/index.js'
+import {sequelize} from './db/models/index.js'
 
 
 const port = process.env.PORT || 3001

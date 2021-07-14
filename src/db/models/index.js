@@ -1,23 +1,8 @@
-import s from 'sequelize'
+import sequelize from "../config/index.js"
+import BlogPost from "./BlogPostModel.js"
+import Author from "./AuthorModel.js"
 
-const Sequelize = s.Sequelize
+Author.hasMany(BlogPost)
+BlogPost.belongsTo(Author)
 
-const { PGUSER, PGDATABASE, PGPASSWORD, PGHOST, PGPORT } = process.env
-
-const sequelize = new Sequelize( PGDATABASE, PGUSER, PGPASSWORD, {
-    host: PGHOST,
-    port: PGPORT,
-    dialect: 'postgres',
-})
-
-const test = async () => {
-    try {
-        await sequelize.authenticate()
-        console.log("Connection to database has been established successfully");
-    } catch (error) {
-        console.log("Unable to connect to the database: ", error);
-    }
-}
-test()
-
-export default sequelize
+export { sequelize, Author, BlogPost }

@@ -1,4 +1,4 @@
-import sequelize from "./index.js";
+import sequelize from "../config/index.js";
 import s from 'sequelize'
 
 const { DataTypes } = s
