@@ -7,6 +7,7 @@ const { Op } = sequelize
 const router = Router()
 
 router.route('/')
+    // ===============  RETRIEVES LIST OF AUTHORS =======================
     .get( async (req, res, next) => {
         try {
             const filters = []
@@ -35,6 +36,7 @@ router.route('/')
             next(error)
         }
     })
+    // ===============  CREATES NEW AUTHOR =======================
     .post( async (req, res, next) => {
         try {
             const data = await Author.create(req.body)
@@ -46,6 +48,7 @@ router.route('/')
     })
 
 router.route('/:authorId')
+   // ===============  RETRIEVES SINGLE AUTHOR =======================
     .get( async (req, res, next) => {
         try {
             const data = await Author.findByPk(req.params.authorId)
@@ -55,6 +58,7 @@ router.route('/:authorId')
             next(error)
         }
     })
+    // ===============  UPDATES AN AUTHOR =======================
     .put( async (req, res, next) => {
         try {
             const data = await Author.update(req.body, {
@@ -68,6 +72,7 @@ router.route('/:authorId')
             next(error)
         }
     })
+    // ===============  DELETES AN AUTHOR =======================
     .delete( async (req, res, next) => {
         try {
             const rowsCount = await Author.destroy({ where: { id: req.params.authorId} })
@@ -75,7 +80,7 @@ router.route('/:authorId')
             if(rowsCount === 0) {
                 res.status(404).send(`Author with id: ${req.params.authorId} Not Found!`)
             } else {
-                res.send(`Author with id: ${req.params.authorId} was successfully deleted!`)
+                res.send(`Author with id: ${req.params.authorId}, successfully deleted!`)
             }
         } catch (error) {
             console.log(error)
