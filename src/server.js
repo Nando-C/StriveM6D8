@@ -3,6 +3,8 @@ import listEndpoints from 'express-list-endpoints'
 import cors from 'cors'
 import { badRequestMiddleware, catchAllErrorsMiddleware, notFoundMiddleware } from './errorMiddlewares.js'
 
+import sequelize from './db/index.js'
+
 
 const port = process.env.PORT || 3001
 
@@ -22,6 +24,10 @@ server.use(catchAllErrorsMiddleware)
 
 console.table(listEndpoints(server))
 
-server.listen(port, () => {
-    console.log(" ✅  Server is running on port: " + port)
-})
+sequelize.sync()
+    .then(() => {
+        server.listen(port, () => {
+            console.log(" ✅  Server is running on port: " + port)
+        })
+    })
+    .catch((e) => console.log(e))
