@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { BlogPost } from "../../db/models/index.js";
+import { Author, BlogPost } from "../../db/models/index.js";
 import sequelize from "sequelize";
 
 const { Op } = sequelize
@@ -25,10 +25,12 @@ router.route('/')
             })
 
             const data = await BlogPost.findAll({
-                // attributes: { exclude: ['createdAt', 'updatedAt']},
-                where: filters.length > 0 
-                    ? {[Op.or]: filters}
-                    : {}
+                include: [{model: Author, attributes: ['name', 'avatar'] }],
+                    attributes: { exclude: 'authorId'},
+                    // attributes: { exclude: ['createdAt', 'updatedAt']},
+                    where: filters.length > 0 
+                        ? {[Op.or]: filters}
+                        : {}
             })
             res.send(data)
         } catch (error) {
