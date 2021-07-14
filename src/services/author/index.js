@@ -48,7 +48,9 @@ router.route('/')
 router.route('/:authorId')
     .get( async (req, res, next) => {
         try {
-            
+            const data = await Author.findByPk(req.params.authorId)
+
+            res.send(data)
         } catch (error) {
             console.log(error)
             next(error)
