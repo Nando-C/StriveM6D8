@@ -10,8 +10,8 @@ router.route('/')
     .get( async (req, res, next) => {
         try {
             const filters = []
-
             const keys = Object.keys(req.query)
+
             keys.forEach(key => {
                 let element
 
@@ -49,7 +49,6 @@ router.route('/:authorId')
     .get( async (req, res, next) => {
         try {
             const data = await Author.findByPk(req.params.authorId)
-
             res.send(data)
         } catch (error) {
             console.log(error)
@@ -58,7 +57,12 @@ router.route('/:authorId')
     })
     .put( async (req, res, next) => {
         try {
-            
+            const data = await Author.update(req.body, {
+                where: { id: req.params.authorId},
+                returning: true,
+            })
+
+            res.send(data[1][0])
         } catch (error) {
             console.log(error)
             next(error)
