@@ -70,7 +70,13 @@ router.route('/:authorId')
     })
     .delete( async (req, res, next) => {
         try {
-            
+            const rowsCount = await Author.destroy({ where: { id: req.params.authorId} })
+
+            if(rowsCount === 0) {
+                res.status(404).send(`Author with id: ${req.params.authorId} Not Found!`)
+            } else {
+                res.send(`Author with id: ${req.params.authorId} was successfully deleted!`)
+            }
         } catch (error) {
             console.log(error)
             next(error)
