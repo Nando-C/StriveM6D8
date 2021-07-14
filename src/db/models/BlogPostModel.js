@@ -3,7 +3,7 @@ import s from 'sequelize'
 
 const { DataTypes } = s
 
-const BlogPost = sequelize.define('blogPost', {
+const BlogPost = sequelize.define('blog_post', {
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
